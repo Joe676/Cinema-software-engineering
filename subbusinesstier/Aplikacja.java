@@ -9,7 +9,9 @@ public class Aplikacja {
 	private List<Rezerwacja> rezerwacje = new ArrayList<>();
 	private List<Pracownik> pracownicy = new ArrayList<>();
 	private List<Klient> klienci = new ArrayList<>();
-	private int uprawnienia;
+	private int uprawnienia = 0;
+	
+	Scanner scan = new Scanner(System.in);
 
 	public Aplikacja() {
 		// TODO - implement Aplikacja.Aplikacja
@@ -17,23 +19,19 @@ public class Aplikacja {
 	}
 
 	public List<Rezerwacja> getRezerwacje() {
-		// TODO - implement Aplikacja.getRezerwacje
-		throw new UnsupportedOperationException();
+		return rezerwacje;
 	}
 
 	public List<Seans> getRepertuar() {
-		// TODO - implement Aplikacja.getRepertuar
-		throw new UnsupportedOperationException();
+		return repertuar;
 	}
 
 	public List<Pracownik> getPracowmicy() {
-		// TODO - implement Aplikacja.getPracowmicy
-		throw new UnsupportedOperationException();
+		return pracownicy;
 	}
 
 	public List<Klient> getKlienci() {
-		// TODO - implement Aplikacja.getKlienci
-		throw new UnsupportedOperationException();
+		return klienci;
 	}
 
 	/**
@@ -72,7 +70,7 @@ public class Aplikacja {
 		Seans s = new Seans();
 		s.setData(dane[0]);
 		s.setFilm(dane[1]);
-		//s.setMiejsca(dane[2]);
+		s.setMiejsca(dane[2]);
 		for(Seans seans : repertuar) {
 			if(s.equals(seans)) return s;			
 		}
@@ -83,16 +81,65 @@ public class Aplikacja {
 	 * 
 	 * @param seans
 	 */
-	public void modyfikujSeans(String[] dane, int operacja) {
-		// TODO - implement Aplikacja.modyfikujSeans
-		if(operacja == 1) usunSeans(dane);
-		else if(operacja == 2) modyfikujDaneSeansu(dane);
-		else if(operacja == 3) dodajSeans(dane);
-		//throw new UnsupportedOperationException();
+	public void modyfikujSeans() {
+		int operacja = 0;
+		String[] dane = {};
+		System.out.println("1 - Usun seans");
+		System.out.println("2 - Modyfikuj seans");
+		System.out.println("3 - Dodaj seans");
+		System.out.println("Podaj nr operacji: ");
+		operacja = scan.nextInt();
+		if(operacja == 1) {
+			String info;
+			System.out.println("Podaj tytu³ filmu");
+			info = scan.nextLine();
+			dane[0] = info;
+			System.out.println("Podaj datê filmu");
+			info = scan.nextLine();
+			dane[1] = info;
+			if(wyszukajSeans(dane)!=null) {
+				usunSeans(dane);
+			}
+			else System.out.println("Niepoprawne dane seansu");
+		}
+		else if(operacja == 2) {
+			String info;
+			System.out.println("Podaj tytu³ filmu");
+			info = scan.nextLine();
+			dane[0] = info;
+			System.out.println("Podaj datê filmu");
+			info = scan.nextLine();
+			dane[1] = info;
+			if(wyszukajSeans(dane)!=null) {
+				modyfikujDaneSeansu(dane);
+			}
+			else System.out.println("Niepoprawne dane seansu");
+		}
+		else if(operacja == 3) {
+			String info;
+			System.out.println("Podaj tytu³ filmu");
+			info = scan.nextLine();
+			dane[0] = info;
+			System.out.println("Podaj datê filmu");
+			info = scan.nextLine();
+			dane[1] = info;
+			dodajSeans(dane);
+		}
+		else System.out.println("Nieprawid³owy numer operacji");
 	}
 	
 	public void modyfikujDaneSeansu(String[] dane) {
-		
+		Seans seans = wyszukajSeans(dane);
+		String info;
+		String[] data;
+		System.out.println("Podaj nowy tytu³ filmu");
+		info = scan.nextLine();
+		dane[0] = info;
+		System.out.println("Podaj now¹ datê filmu");
+		info = scan.nextLine();
+		dane[1] = info;
+		seans.setFilm(dane[0]);
+		seans.setData(dane[1]);
 	}
 
 	/**
@@ -100,7 +147,6 @@ public class Aplikacja {
 	 * @param seans
 	 */
 	public void usunSeans(String[] dane) {
-		// TODO - implement Aplikacja.usunSeans
 		Seans seans = wyszukajSeans(dane);
 		if(seans==null) {
 			System.out.println("Nie mozna usunac seansu, nie znaleziono go w repertuarze");
@@ -108,18 +154,33 @@ public class Aplikacja {
 		}
 		else {
 			repertuar.remove(seans);
+			System.out.println("Seans pomyœlnie usuniêty");
 		}
-		//throw new UnsupportedOperationException();
 	}
 
 	public void zaloguj() {
-		// TODO - implement Aplikacja.zaloguj
-		throw new UnsupportedOperationException();
+		System.out.println("Podaj login:");
+		String login = scan.nextLine();
+		for(Pracownik p : pracownicy) {
+			if(p.getLogin().equals(login)) {
+				System.out.println("Podaj haslo: ");
+				String haslo = scan.nextLine();
+				if(p.getHaslo().equals(haslo)){
+					uprawnienia = 1;
+					System.out.println("Zalogowano pomyœlmnie");
+				}
+				else System.out.println("Nieprawid³owe has³o");
+			}
+			else System.out.println("Nieprawid³owy login");
+		}
 	}
 
 	public void wyloguj() {
-		// TODO - implement Aplikacja.wyloguj
-		throw new UnsupportedOperationException();
+		if(uprawnienia==1) {
+			uprawnienia = 0;
+			System.out.println("Wylogowano pomyœlnie");
+		}
+		else System.out.println("Nie ma potrzeby wylogowania");
 	}
 
 	public static void main(String[] args) {
