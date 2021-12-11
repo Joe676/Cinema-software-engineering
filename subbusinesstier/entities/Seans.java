@@ -32,7 +32,7 @@ public class Seans {
 		throw new UnsupportedOperationException();
 	}
 	
-	public void setMiejsca(String[] miejsca) {
+	public void setMiejsca(String miejsca) {
 		// TODO - implement Seans.setMiejsca
 		throw new UnsupportedOperationException();
 	}
@@ -70,5 +70,8 @@ public class Seans {
 		else return false;
 		//throw new UnsupportedOperationException();
 	}
-
+        
+        public String toString(){
+            return film + " - " + data;
+        }
 }

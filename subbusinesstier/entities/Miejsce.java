@@ -21,8 +21,7 @@ public class Miejsce {
 	}
 
 	public int getNR() {
-		// TODO - implement Miejsce.getNR
-		throw new UnsupportedOperationException();
+		return nr;
 	}
 
 	public boolean getCzyWolne() {
@@ -52,5 +51,8 @@ public class Miejsce {
 	public void setCzyWolne(boolean czyWolne) {
 		this.czyWolne = czyWolne;
 	}
-
+        
+        public String toString(){
+		throw new UnsupportedOperationException();
+        }
 }

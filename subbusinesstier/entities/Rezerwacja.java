@@ -3,7 +3,8 @@ package subbusinesstier.entities;
 import java.util.*;
 
 public class Rezerwacja {
-
+        
+        private String nrRezerwacji;
 	private Seans seans;
 	private Collection<Miejsce> miejsca = new ArrayList<>();
 	private Klient klient;
@@ -12,7 +13,15 @@ public class Rezerwacja {
 		// TODO - implement Rezerwacja.Rezerwacja
 		throw new UnsupportedOperationException();
 	}
-
+        
+        public String getNr(){
+            return nrRezerwacji;
+        }
+        
+        public void setNr(String nr){
+            nrRezerwacji = nr;
+        }
+        
 	public Seans getSeans() {
 		return this.seans;
 	}

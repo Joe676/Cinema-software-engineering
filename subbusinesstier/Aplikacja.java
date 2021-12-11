@@ -67,10 +67,11 @@ public class Aplikacja {
 	}
 	
 	public Seans wyszukajSeans(String[] dane) {
-		Seans s = new Seans();
-		s.setData(dane[0]);
-		s.setFilm(dane[1]);
-		s.setMiejsca(dane[2]);
+                Fabryka fabryka = new Fabryka();
+		Seans s = fabryka.stworzSeans(dane);
+//		s.setData(dane[0]);
+//		s.setFilm(dane[1]);
+//		s.setMiejsca(dane[2]);
 		for(Seans seans : repertuar) {
 			if(s.equals(seans)) return s;			
 		}
@@ -89,8 +90,10 @@ public class Aplikacja {
 		System.out.println("3 - Dodaj seans");
 		System.out.println("Podaj nr operacji: ");
 		operacja = scan.nextInt();
-		if(operacja == 1) {
-			String info;
+                switch(operacja){
+                    case 1:
+                    {
+                        String info;
 			System.out.println("Podaj tytu³ filmu");
 			info = scan.nextLine();
 			dane[0] = info;
@@ -101,8 +104,10 @@ public class Aplikacja {
 				usunSeans(dane);
 			}
 			else System.out.println("Niepoprawne dane seansu");
-		}
-		else if(operacja == 2) {
+                    }
+                    break;
+                    case 2:
+                    {
 			String info;
 			System.out.println("Podaj tytu³ filmu");
 			info = scan.nextLine();
@@ -114,8 +119,10 @@ public class Aplikacja {
 				modyfikujDaneSeansu(dane);
 			}
 			else System.out.println("Niepoprawne dane seansu");
-		}
-		else if(operacja == 3) {
+                    }
+                    break;
+                    case 3:
+                    {
 			String info;
 			System.out.println("Podaj tytu³ filmu");
 			info = scan.nextLine();
@@ -124,8 +131,50 @@ public class Aplikacja {
 			info = scan.nextLine();
 			dane[1] = info;
 			dodajSeans(dane);
-		}
-		else System.out.println("Nieprawid³owy numer operacji");
+                    }
+                    break;
+                    
+                    default:
+                        System.out.println("Nieprawid³owy numer operacji");
+                        
+                }
+//		if(operacja == 1) {
+//			String info;
+//			System.out.println("Podaj tytu³ filmu");
+//			info = scan.nextLine();
+//			dane[0] = info;
+//			System.out.println("Podaj datê filmu");
+//			info = scan.nextLine();
+//			dane[1] = info;
+//			if(wyszukajSeans(dane)!=null) {
+//				usunSeans(dane);
+//			}
+//			else System.out.println("Niepoprawne dane seansu");
+//		}
+//		else if(operacja == 2) {
+//			String info;
+//			System.out.println("Podaj tytu³ filmu");
+//			info = scan.nextLine();
+//			dane[0] = info;
+//			System.out.println("Podaj datê filmu");
+//			info = scan.nextLine();
+//			dane[1] = info;
+//			if(wyszukajSeans(dane)!=null) {
+//				modyfikujDaneSeansu(dane);
+//			}
+//			else System.out.println("Niepoprawne dane seansu");
+//		}
+//		else if(operacja == 3) {
+//			String info;
+//			System.out.println("Podaj tytu³ filmu");
+//			info = scan.nextLine();
+//			dane[0] = info;
+//			System.out.println("Podaj datê filmu");
+//			info = scan.nextLine();
+//			dane[1] = info;
+//			dodajSeans(dane);
+//		}
+//		else System.out.println("Nieprawid³owy numer operacji");
 	}
 	
 	public void modyfikujDaneSeansu(String[] dane) {
@@ -193,8 +242,7 @@ public class Aplikacja {
 	 * @param rezerwacja
 	 */
 	public void dodajRezerwacje(Rezerwacja rezerwacja) {
-		// TODO - implement Aplikacja.dodajRezerwacje
-		throw new UnsupportedOperationException();
+                rezerwacje.add(rezerwacja);
 	}
 
 	/**
@@ -202,26 +250,133 @@ public class Aplikacja {
 	 * @param rezerwacja
 	 */
 	public void usunRezerwacje(Rezerwacja rezerwacja) {
-		// TODO - implement Aplikacja.usunRezerwacje
-		throw new UnsupportedOperationException();
+                if(rezerwacje.contains(rezerwacja)){
+                    rezerwacje.remove(rezerwacja);
+                }
 	}
 
+        public void usunRezerwacje(int idx) {
+                if(idx != -1){
+                    rezerwacje.remove(idx);
+                }
+	}
+        
 	/**
 	 * 
 	 * @param rezerwacja
 	 */
 	public void modyfikujRezerwacje(Rezerwacja rezerwacja) {
-		// TODO - implement Aplikacja.modyfikujRezerwacje
 		throw new UnsupportedOperationException();
 	}
+        
+        public void zarzadzajRezerwacjami(){
+            int operacja;
+            String[] dane = {};
+            System.out.println("1 - Usun rezerwacje");
+            System.out.println("2 - Modyfikuj rezerwacje");
+            System.out.println("3 - Rezerwuj miejsce");
+            System.out.println("Podaj nr operacji: ");
+            operacja = scan.nextInt();
+            
+            switch(operacja){
+                    case 1:
+                    {
+                        String info;
+			System.out.println("Podaj numer rezerwacji");
+			info = scan.nextLine();
+			dane[0] = info;
+			if(wyszukajRezerwacje(dane[0])!=-1) {
+                            usunRezerwacje(Integer.valueOf(dane[0]));
+			}
+			else System.out.println("Niepoprawny numer");
+                    }
+                    break;
+                    case 2:
+                    {
+                    }
+                    break;
+                    case 3:
+                    {
+                        rezerwujMiejsca();
+                    }
+                    break;
+                    
+                    default:
+                        System.out.println("Nieprawid³owy numer operacji");
+                        
+                }
+        }
 
 	/**
 	 * 
 	 * @param rezerwacja
+     * @return indeks szukanej rezerwacji
 	 */
 	public int wyszukajRezerwacje(Rezerwacja rezerwacja) {
-		// TODO - implement Aplikacja.wyszukajRezerwacje
-		throw new UnsupportedOperationException();
+                return rezerwacje.indexOf(rezerwacja);
 	}
+        
+        public int wyszukajRezerwacje(String numerRezerwacji){
+            for(int i = 0; i < rezerwacje.size(); i++){
+                if(rezerwacje.get(i).getNr().equals(numerRezerwacji)) return i;
+            }
+            return -1;
+        }
+
+    private void rezerwujMiejsca() {
+        for(int i = 0; i < repertuar.size(); i++){
+            System.out.println(i + ".: " + repertuar.get(i).toString());
+        }
+        System.out.println("Podaj numer filmu");
+        int filmIdx = scan.nextInt();
+        List<Miejsce> wolneMiejsca = repertuar.get(filmIdx).getWolneMiejsca();
+        if(wolneMiejsca.isEmpty()){
+            System.out.println("Nie ma wolnych miejsc na wybrany seans.");
+            return;
+        }
+        System.out.println("Podaj liczbê rezerwowanych miejsc.");
+        int liczbaMiejsc = scan.nextInt();
+        if(wolneMiejsca.size() < liczbaMiejsc){
+            System.out.println("Na ten seans nie ma wystarczaj¹co wolnych miejsc");
+            return;
+        }
+        System.out.println("Lista wolnych miejsc: ");
+        for(int i = 0; i < wolneMiejsca.size(); i++){
+            System.out.println(i + ".: " + wolneMiejsca.get(i).toString());
+        }
+        
+        System.out.println("Podaj wybrane numery miejsc");
+        
+        int[] miejsca = new int[liczbaMiejsc];
+        for(int i = 0; i < liczbaMiejsc; i++){
+            miejsca[i] = scan.nextInt();
+        }
+        
+        System.out.println("Podaj id klienta");
+        int idKlienta = scan.nextInt();
+        if(wyszukajKlienta(idKlienta) == -1){
+            System.out.println("Nie znaleziono klienta");
+            return;
+        }
+        String[] dane = new String[3];
+        dane[0] = Integer.toString(filmIdx);
+        String miejscaString = "";
+        for(int i = 0; i < liczbaMiejsc; i++){
+            miejscaString += miejsca[i] + "|";
+        }
+        dane[1] = miejscaString;
+        dane[2] = Integer.toString(idKlienta);
+        Fabryka fabryka = new Fabryka();
+        Rezerwacja r = fabryka.stworzRezerwacje(dane);
+        dodajRezerwacje(r);
+        System.out.println("Numer Rezerwacji: " + r.getNr());
+    }
+    
+    public int wyszukajKlienta(int id){
+        for(int i = 0; i < klienci.size(); i++){
+            if(klienci.get(i).getId() == id)return i; 
+        }
+        return -1;
+    }
 
 }
