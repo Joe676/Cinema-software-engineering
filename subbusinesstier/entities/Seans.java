@@ -4,18 +4,18 @@ import java.util.*;
 
 public class Seans {
 
-	private Collection<Miejsce> miejsca = new ArrayList<>();
+	private List<Miejsce> miejsca = new ArrayList<>();
 	private String film;
 	private String data;
 
-	public Seans() {
-		// TODO - implement Seans.Seans
-		throw new UnsupportedOperationException();
+	public Seans(String _film, String _data, List<Miejsce> _miejsca) {
+		setFilm(_film);
+                setData(_data);
+                setMiejsca(_miejsca);
 	}
 
 	public List<Miejsce> getMiejsca() {
-		// TODO - implement Seans.getMiejsca
-		throw new UnsupportedOperationException();
+		return this.miejsca;
 	}
 
 	public List<Miejsce> getWolneMiejsca() {
@@ -28,9 +28,8 @@ public class Seans {
 	 * @param miejsca
 	 */
 	public void setMiejsca(List<Miejsce> miejsca) {
-		// TODO - implement Seans.setMiejsca
-		throw new UnsupportedOperationException();
-	}
+            this.miejsca = miejsca;
+        }
 	
 	public void setMiejsca(String miejsca) {
 		// TODO - implement Seans.setMiejsca
@@ -58,20 +57,20 @@ public class Seans {
 	 * @param data
 	 */
 	public void setData(String data) {
-		// TODO - implement Seans.setData
-		throw new UnsupportedOperationException();
+		this.data = data;
 	}
 	
+        @Override
 	public boolean equals(Object obj) {
 		// TODO - implement Seans.setData
 		if(!(obj instanceof Seans)) return false;
 		Seans seans = (Seans)obj;
-		if(seans.getData()==this.getData() && seans.getFilm()==this.getFilm() && seans.getMiejsca()==this.getMiejsca()) return true;
+		if(seans.getData()==this.getData() && seans.getFilm()==this.getFilm()) return true;
 		else return false;
-		//throw new UnsupportedOperationException();
 	}
         
         public String toString(){
             return film + " - " + data;
         }
+        
 }

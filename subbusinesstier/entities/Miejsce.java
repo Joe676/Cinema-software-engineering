@@ -7,9 +7,11 @@ public class Miejsce {
 	private int nr;
 	private boolean czyWolne;
 
-	public Miejsce() {
-		// TODO - implement Miejsce.Miejsce
-		throw new UnsupportedOperationException();
+	public Miejsce(int _sala, int _rzad, int _nr) {
+		sala = _sala;
+                rzad = _rzad;
+                nr = _nr;
+                czyWolne = true;
 	}
 
 	public int getSala() {
@@ -54,5 +56,12 @@ public class Miejsce {
         
         public String toString(){
 		throw new UnsupportedOperationException();
+        }
+        
+        @Override
+	public boolean equals(Object obj) {
+            if(!(obj instanceof Miejsce)) return false;
+            Miejsce miejsce = (Miejsce)obj;
+            return sala == miejsce.getSala() && nr == miejsce.getNR() && rzad == miejsce.getRzad();
         }
 }
